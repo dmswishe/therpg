@@ -1,0 +1,57 @@
+
+testing.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainbg
+  rotate: false
+  xy: 1, 99
+  size: 480, 320
+  orig: 480, 320
+  offset: 0, 0
+  index: -1
+main active button
+  rotate: false
+  xy: 1, 50
+  size: 194, 47
+  orig: 194, 47
+  offset: 0, 0
+  index: -1
+main
+  rotate: false
+  xy: 1, 50
+  size: 194, 47
+  split: 9, 6, 6, 6
+  orig: 194, 47
+  offset: 0, 0
+  index: -1
+main clicked button
+  rotate: false
+  xy: 1, 1
+  size: 194, 47
+  orig: 194, 47
+  offset: 0, 0
+  index: -1
+main-clicked
+  rotate: false
+  xy: 1, 1
+  size: 194, 47
+  split: 13, 10, 6, 5
+  orig: 194, 47
+  offset: 0, 0
+  index: -1
+main disabled button
+  rotate: false
+  xy: 197, 50
+  size: 194, 47
+  orig: 194, 47
+  offset: 0, 0
+  index: -1
+main-disabled
+  rotate: false
+  xy: 197, 50
+  size: 194, 47
+  split: 12, 9, 4, 4
+  orig: 194, 47
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,48 @@
+{
+    com.badlogic.gdx.graphics.g2d.BitmapFont: {
+        normaltext: { file: fonts/arial25.fnt },
+        titletext: { file: fonts/impact50.fnt} ,
+    },
+    com.badlogic.gdx.graphics.Color: {
+        red: { a: 1, b: 0, g: 0, r: 1 },
+        blue: { a: 1, b: 1, g: 0, r: 0 },
+        green: { a: 1, b: 0, g: 1, r: 0 },
+        white: { a: 1, b: 1, g: 1, r: 1 },
+        black: { a: 1, b: 0, g: 0, r: 0 }
+    },
+    com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+        default: { font: normaltext, fontColor: black },
+        normal-text: { font: normaltext, fontColor: black },
+        title-text: { font: titletext, fontColor: red }
+    },
+    com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+        default: { up: main, down: main-clicked, checked: main-clicked, disabled: main-disabled }
+    },
+    com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+        default: { up: main, down: main-clicked, checked: main, disabled: main-disabled, font: normaltext, fontColor: white },
+        toggle: { up: main, down: main-clicked, checked: main-clicked, disabled: main-disabled, font: normaltext, fontColor: white }
+    },
+    com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+        to-main: { up: mainmenu, down: mainmenu-clicked, checked: mainmenu },
+        next-button: { up: next-purple, down: next-teal, checked: next-purple, disabled: next-idle },
+        back-button: { up: back-purple, down: back-teal, checked: back-purple, disabled: back-idle }
+    },
+    com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+        default: { titleFont: normaltext, titleFontColor: green }
+    },
+    com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+        default-horizontal: { background: default-slider, knob: default-slider-knob }
+    },
+    com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+        default: { checkboxOn: check-on, checkboxOff: check-off, font: normaltext, fontColor: black }
+    },
+    com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+        default: {
+            font: normaltext, fontColor: black, background: default-select, listBackground: default-select,
+            listSelection: default-select-selection
+        }
+    },
+    com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+    default: { font: normaltext, fontColor: black, cursor: default-slider-knob }
+    }
+}

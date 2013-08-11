@@ -1,0 +1,77 @@
+
+testing2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main-clicked
+  rotate: false
+  xy: 1, 8
+  size: 194, 47
+  split: 13, 10, 6, 5
+  orig: 194, 47
+  offset: 0, 0
+  index: -1
+main-disabled
+  rotate: false
+  xy: 197, 8
+  size: 194, 47
+  split: 12, 9, 4, 4
+  orig: 194, 47
+  offset: 0, 0
+  index: -1
+main
+  rotate: false
+  xy: 393, 8
+  size: 194, 47
+  split: 9, 6, 6, 6
+  orig: 194, 47
+  offset: 0, 0
+  index: -1
+default-select
+  rotate: false
+  xy: 589, 30
+  size: 146, 25
+  split: 8, 9, 3, 4
+  orig: 146, 25
+  offset: 0, 0
+  index: -1
+default-slider
+  rotate: false
+  xy: 1, 1
+  size: 135, 5
+  split: 7, 3, 1, 0
+  orig: 135, 5
+  offset: 0, 0
+  index: -1
+default-select-selection
+  rotate: false
+  xy: 737, 30
+  size: 26, 25
+  split: 3, 3, 2, 3
+  orig: 26, 25
+  offset: 0, 0
+  index: -1
+check-off
+  rotate: false
+  xy: 589, 8
+  size: 24, 20
+  split: 4, 3, 2, 2
+  orig: 24, 20
+  offset: 0, 0
+  index: -1
+check-on
+  rotate: false
+  xy: 765, 35
+  size: 24, 20
+  split: 3, 2, 2, 1
+  orig: 24, 20
+  offset: 0, 0
+  index: -1
+default-slider-knob
+  rotate: false
+  xy: 615, 11
+  size: 7, 17
+  split: 1, 0, 0, 0
+  orig: 7, 17
+  offset: 0, 0
+  index: -1

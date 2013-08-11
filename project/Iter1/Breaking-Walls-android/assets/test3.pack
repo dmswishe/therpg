@@ -1,0 +1,229 @@
+
+test3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainbg
+  rotate: false
+  xy: 1, 697
+  size: 480, 320
+  split: 57, 79, 50, 44
+  orig: 480, 320
+  offset: 0, 0
+  index: -1
+female-archer
+  rotate: false
+  xy: 1, 455
+  size: 240, 240
+  split: 55, 13, 14, 13
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+female-barbarian
+  rotate: false
+  xy: 483, 777
+  size: 240, 240
+  split: 43, 68, 13, 10
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+female-sorcerer
+  rotate: false
+  xy: 1, 213
+  size: 240, 240
+  split: 17, 45, 11, 14
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+female-warrior
+  rotate: false
+  xy: 725, 777
+  size: 240, 240
+  split: 30, 61, 11, 19
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+female
+  rotate: false
+  xy: 243, 455
+  size: 240, 240
+  split: 56, 61, 8, 16
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+male-archer
+  rotate: false
+  xy: 243, 213
+  size: 240, 240
+  split: 18, 17, 9, 7
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+male-barbarian
+  rotate: false
+  xy: 485, 535
+  size: 240, 240
+  split: 33, 49, 5, 12
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+male-sorcerer
+  rotate: false
+  xy: 485, 293
+  size: 240, 240
+  split: 10, 43, 4, 14
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+male-warrior
+  rotate: false
+  xy: 727, 535
+  size: 240, 240
+  split: 36, 53, 9, 11
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+male
+  rotate: false
+  xy: 727, 293
+  size: 240, 240
+  split: 42, 55, 23, 6
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+main-clicked
+  rotate: false
+  xy: 1, 164
+  size: 194, 47
+  split: 13, 10, 6, 5
+  orig: 194, 47
+  offset: 0, 0
+  index: -1
+main-disabled
+  rotate: false
+  xy: 485, 244
+  size: 194, 47
+  split: 12, 9, 4, 4
+  orig: 194, 47
+  offset: 0, 0
+  index: -1
+main
+  rotate: false
+  xy: 1, 115
+  size: 194, 47
+  split: 9, 6, 6, 6
+  orig: 194, 47
+  offset: 0, 0
+  index: -1
+default-select
+  rotate: false
+  xy: 197, 186
+  size: 146, 25
+  split: 8, 9, 3, 4
+  orig: 146, 25
+  offset: 0, 0
+  index: -1
+mainmenu-clicked
+  rotate: false
+  xy: 1, 41
+  size: 72, 72
+  split: 5, 6, 6, 4
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+mainmenu
+  rotate: false
+  xy: 75, 41
+  size: 72, 72
+  split: 0, 0, 0, 0
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+default-slider
+  rotate: false
+  xy: 485, 237
+  size: 135, 5
+  split: 7, 3, 1, 0
+  orig: 135, 5
+  offset: 0, 0
+  index: -1
+back-idle
+  rotate: false
+  xy: 681, 253
+  size: 92, 38
+  split: 6, 8, 4, 3
+  orig: 92, 38
+  offset: 0, 0
+  index: -1
+back-purple
+  rotate: false
+  xy: 197, 146
+  size: 92, 38
+  split: 5, 3, 4, 4
+  orig: 92, 38
+  offset: 0, 0
+  index: -1
+back-teal
+  rotate: false
+  xy: 1, 1
+  size: 92, 38
+  split: 10, 9, 4, 3
+  orig: 92, 38
+  offset: 0, 0
+  index: -1
+next-idle
+  rotate: false
+  xy: 775, 253
+  size: 92, 38
+  split: 9, 15, 4, 6
+  orig: 92, 38
+  offset: 0, 0
+  index: -1
+next-purple
+  rotate: false
+  xy: 869, 253
+  size: 92, 38
+  split: 10, 14, 5, 5
+  orig: 92, 38
+  offset: 0, 0
+  index: -1
+next-teal
+  rotate: false
+  xy: 197, 106
+  size: 92, 38
+  split: 16, 11, 4, 5
+  orig: 92, 38
+  offset: 0, 0
+  index: -1
+default-select-selection
+  rotate: false
+  xy: 967, 992
+  size: 26, 25
+  split: 3, 3, 2, 3
+  orig: 26, 25
+  offset: 0, 0
+  index: -1
+check-off
+  rotate: false
+  xy: 345, 191
+  size: 24, 20
+  split: 4, 3, 2, 2
+  orig: 24, 20
+  offset: 0, 0
+  index: -1
+check-on
+  rotate: false
+  xy: 485, 215
+  size: 24, 20
+  split: 3, 2, 2, 1
+  orig: 24, 20
+  offset: 0, 0
+  index: -1
+default-slider-knob
+  rotate: false
+  xy: 291, 167
+  size: 7, 17
+  split: 1, 0, 0, 0
+  orig: 7, 17
+  offset: 0, 0
+  index: -1
