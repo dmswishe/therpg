@@ -1,0 +1,61 @@
+{
+	Town : {
+		mapPack : "data/Maps/MapPacks/town.pack",
+		
+		layer : {
+			background : townBG,
+			name : "Main",
+			width : 1152,
+			height : 648,
+			object : {
+				name : "city-hall",
+				image : city-hall,
+				pos-x : 375,
+				pos-y: 451,
+				type : layer-transition,
+				location : "City-Hall"
+			},
+			
+			object : {
+				name : "bakery",
+				image : bakery,
+				pos-x : 696,
+				pos-y: 130,
+				type : layer-transition,
+				location : "Bakery"
+			}
+		},
+		
+		layer : {
+			background : city-hall-interior,
+			name : "City-Hall",
+			width : 480,
+			height : 320,
+			
+			object : {
+				name : "city-hall-exit",
+				image : city-hall-doors,
+				pos-x : 455,
+				pos-y: 47,
+				type : layer-transition,
+				location : "Main"
+			}
+		},
+		
+		layer : {
+			background : bakery-interior,
+			name : "Bakery",
+			width : 480,
+			height : 320,
+			
+			object : {
+				name : "bakery-exit",
+				image : bakery-doors,
+				pos-x : 0,
+				pos-y: 0,
+				type : layer-transition,
+				location : "Main"
+			}
+		}
+	}
+}

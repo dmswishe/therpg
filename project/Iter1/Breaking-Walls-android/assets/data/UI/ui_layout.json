@@ -1,0 +1,333 @@
+{
+	Screen : {
+		type : Table,
+		fullscreen : true,
+		isActor : true,
+		children : {
+			mainmenu : {
+				type : Table,
+				isActor : true,
+				spaceBottom : 10,
+				background : mainbg,
+				fillparent : true,
+				
+				children : {
+					mutebutton : {
+						type : Button,
+						style : mute,
+						isActor : false,
+						align : right,
+						colspan : 2,
+						lastcell : true
+					},
+					newgamebutton : {
+						type : TextButton,
+						text : "New Game",
+						style : toggle,
+						isActor : false,
+						align : center,
+						lastcell : true
+					},
+					continuebutton : {
+						type : TextButton,
+						text : "Continue",
+						style : toggle,
+						isActor : false,
+						align : center,
+						lastcell : true
+					},
+					optionbutton : {
+						type : TextButton,
+						text : "Option",
+						style : toggle,
+						isActor : false,
+						align : center,
+						lastcell : true
+					},
+					exitbutton : {
+						type : TextButton,
+						text : "Exit",
+						style : toggle,
+						isActor : false,
+						align : center
+					}
+				}
+			},
+			options : {
+				type : Table,
+				isActor : true,
+				spaceBottom : 10,
+				background : mainbg,
+				isVisible : false,
+				fillparent : true,
+				children : {
+					vibrationLabel : {
+						type : Label,
+						text : "Vibration: ",
+						style : normal-text,
+						isActor : false
+					},
+					vibrationBox : {
+						type : CheckBox,
+						isActor : false,
+						lastcell : true
+					},
+					musicLabel : {
+						type : Label,
+						text : "Music Volume: ",
+						style : normal-text,
+						isActor : false
+					},
+					musicSlider : {
+						type : Slider,
+						min : 0,
+						max : 11,
+						step : 1,
+						vertical : false,
+						isActor : false,
+						lastcell : true
+					},
+					sfxLabel : {
+						type : Label,
+						text : "SFX Volume: ",
+						style : normal-text,
+						isActor : false
+					},
+					sfxSlider : {
+						type : Slider,
+						min : 0,
+						max : 11,
+						step : 1,
+						vertical : false,
+						isActor : false,
+						lastcell : true
+					},
+					scrollLabel : {
+						type : Label,
+						text : "Scroll Speed: ",
+						style : normal-text,
+						isActor : false,
+					},
+					scrollBox : {
+						type : SelectBox,
+						items : "Slow,Medium,Fast,Instant",
+						isActor : false,
+						lastcell : true
+					},
+					optionBack : {
+						type : TextButton,
+						text : "Back",
+						style : toggle,
+						isActor : false,
+						colspan : 2
+					}
+				}
+			},
+			newgame : {
+				type : Table,
+				isActor : true,
+				isVisible : false,
+				fillparent : true,
+				background : mainbg,
+				children : {
+					selectPane : {
+						type : Table,
+						isActor : false,
+						children : {
+							gender : {
+								type : Table,
+								isActor : true,
+								spaceBottom : 10,
+								fillparent : true,
+								children : {
+									genderTitle : {
+										type : Label,
+										text : "Select Gender",
+										style : title-text,
+										isActor : false,
+										lastcell : true
+									},
+									maleButton : {
+										type : TextButton,
+										text : "Male",
+										style : toggle,
+										isActor : false,
+										lastcell : true
+									},
+									femaleButton : {
+										type : TextButton,
+										text : "Female",
+										isActor : false,
+										style : toggle
+									}
+								}
+							},
+							class : {
+								type : Table,
+								isActor : true,
+								spaceBottom : 5,
+								isVisible : false,
+								fillparent : true,
+								children : {
+									classTitle : {
+										type : Label,
+										text : "Select Class",
+										style : normal-text,
+										isActor : false,
+										lastcell : true
+									},
+									archer : {
+										type : TextButton,
+										text : "Archer",
+										style : toggle,
+										isActor : false,
+										lastcell : true
+									},
+									barbarian : {
+										type : TextButton,
+										text : "Barbarian",
+										style : toggle,
+										isActor : false,
+										lastcell : true
+									},
+									sorcerer : {
+										type : TextButton,
+										text : "Sorcerer",
+										style : toggle,
+										isActor : false,
+										lastcell : true
+									},
+									warrior : {
+										type : TextButton,
+										text : "Warrior",
+										style : toggle,
+										isActor : false
+									}
+								}
+							},
+							name : {
+								type : Table,
+								isActor : true,
+								spaceBottom : 10,
+								isVisible : false,
+								fillparent : true,
+								children : {
+									nameTitle : {
+										type : Label,
+										text : "Chose Name",
+										style : normal-text,
+										isActor : false,
+										colspan: 2,
+										lastcell : true
+									},
+									nameLabel : {
+										type : Label,
+										text : "Name: ",
+										style : normal-text,
+										isActor : false,
+									},
+									nameText : {
+										type : TextField,
+										text : "",
+										message : "Enter Name Here!",
+										isActor : false,
+									}
+								}
+							},
+							review : {
+								type : Table,
+								isActor : true,
+								spaceBottom : 10,
+								isVisible : false,
+								fillparent : true,
+								children : {
+									reviewName : {
+										type : Label,
+										text : "Name: ",
+										style : normal-text,
+										isActor : false,
+										lastcell : true
+									},
+									reviewClass : {
+										type : Label,
+										text : "Class: ",
+										style : normal-text,
+										isActor : false,
+										lastcell : true
+									},
+									reviewGender : {
+										type : Label,
+										text : "Gender: ",
+										style : normal-text,
+										isActor : false
+									}
+								}
+							}
+						}
+					},
+					imagePane : {
+						type : Table,
+						isActor : false,
+						space : 20,
+						lastcell : true,
+						children : {
+							characterPane : {
+								type : Image,
+								isActor : false,
+								drawable : male
+							}
+						}
+					},
+					newgameNav : {
+						type : Table,
+						isActor : false,
+						colspan : 2,
+						minWidth : "w",
+						children : {
+							newgameBack : {
+								type : Button,
+								style : to-main,
+								isActor : false,
+								align : left,
+							},
+							navButtons : {
+								type : Table,
+								isActor : false,
+								padTop : 10,
+								padBottom : 10,
+								children : {
+									navBack : {
+										type : Button,
+										style : back-button,
+										isActor : false,
+										padRight : 10,
+										disabled : true
+									},
+									navNext : {
+										type : Button,
+										style : next-button,
+										disabled : true,
+										isActor : false
+									}
+								}
+							}
+						}
+					}
+					
+				}
+			},
+			town : {
+				type : Table,
+				isActor : true,
+				isVisible : false,
+				fillparent : true
+			},
+			map : {
+				type : Table,
+				isVisible : false,
+				isActor : true,
+				fillparent : true
+			}
+		}
+	}
+}

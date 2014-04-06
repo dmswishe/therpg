@@ -4,6 +4,7 @@ package com.me.breakingwalls;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,6 +33,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -46,7 +48,10 @@ public class BreakingWalls implements ApplicationListener {
 	private SpriteBatch batch;
 	private Texture texture;
 	private Sprite sprite;
+	private InputMultiplexer gameInputProcessors;
 	
+	UISpawner uiSpawner;
+	MapManager mapManager;
 	Skin skin;
 	Stage ui;
 	Table root;
@@ -67,487 +72,285 @@ public class BreakingWalls implements ApplicationListener {
 		camera = new OrthographicCamera(1, h/w);
 		batch = new SpriteBatch();
 		
-		texture = new Texture(Gdx.files.internal("data/libgdx.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		heroName = "";
-		//TextureRegion region = new TextureRegion(texture, 0, 0, 512, 275);
+		newGameState = NewGameStates.GENDER;
 		
-		/*sprite = new Sprite(region);
-		sprite.setSize(0.9f, 0.9f * sprite.getHeight() / sprite.getWidth());
-		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
-		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
-		*/
+		gameInputProcessors =  new InputMultiplexer();
 		
-		// load asset manager and skin
-		AssetManager manager = new AssetManager();
-		manager.load("test3.pack", TextureAtlas.class);
-		manager.finishLoading();
-		TextureAtlas atlas = manager.get("test3.pack", TextureAtlas.class);
-		skin = new Skin(Gdx.files.internal("data/style.json"), atlas);
-		//skin = new Skin();
 		
-		maleDefault = new TextureRegionDrawable(atlas.findRegion("male"));
-		maleArcher = new TextureRegionDrawable(atlas.findRegion("male-archer"));
-		maleBarbarian = new TextureRegionDrawable(atlas.findRegion("male-barbarian"));
-		maleSorcerer = new TextureRegionDrawable(atlas.findRegion("male-sorcerer"));
-		maleWarrior = new TextureRegionDrawable(atlas.findRegion("male-warrior"));
+		// testing UI loading
+		uiSpawner = new UISpawner("test3.pack", "data/style.json", "data/UI/ui_layout.json", w, h, false);
 		
-		femaleDefault = new TextureRegionDrawable(atlas.findRegion("female"));
-		femaleArcher = new TextureRegionDrawable(atlas.findRegion("female-archer"));
-		femaleBarbarian = new TextureRegionDrawable(atlas.findRegion("female-barbarian"));
-		femaleSorcerer = new TextureRegionDrawable(atlas.findRegion("female-sorcerer"));
-		femaleWarrior = new TextureRegionDrawable(atlas.findRegion("female-warrior"));
-		//sprite = new Sprite(atlas.findRegion("mainbg"));
+		mapManager = new MapManager((int) w, (int) h);
+		mapManager.LoadMap("data/Maps/town_map.json");
 		
-		// create GUI
-		ui = new Stage(w,h, false);
-		Gdx.input.setInputProcessor(ui);
-		//mainbg = new TextureRegion(new Texture(Gdx.files.internal("data/mainbg.png")));
-		//mainbg = atlas.findRegion("mainbg");
+		mapManager.SetCurrentLayer("Main");
 		
-		root = new Table();
-		root.setFillParent(true);
-		ui.addActor(root);
-		root.debug();
+		gameInputProcessors.addProcessor(uiSpawner.getUI());
+		gameInputProcessors.addProcessor(new GestureDetector(mapManager));
+		gameInputProcessors.addProcessor(mapManager.GetCurrentStage());
 		
-		//Image image = new Image(mainbg);
-		//image.setScaling(Scaling.fill);
-		//root.add(image).width(w).height(h);
+		mapManager.RegisterInputMultiplexer(gameInputProcessors);
 		
-
 		
-		root.defaults().spaceBottom(10.0f);
-		TextButton newGame = new TextButton("New Game", skin);
-		root.add(newGame);
-		root.row();
+		mapManager.HideMap();
 		
-		TextButton continueGame = new TextButton("Continue", skin);
-		root.add(continueGame);
-		root.row();
+		//Gdx.input.setInputProcessor(uiSpawner.getUI());
+		Gdx.input.setInputProcessor(gameInputProcessors);
 		
-		TextButton gameOptions = new TextButton("Options", skin);
-		root.add(gameOptions);
-		root.row();
+		// add callbacks
 		
-		TextButton exitGame = new TextButton("Exit", skin);
-		root.add(exitGame);
+		// new game
+		uiSpawner.RegisterCallback("newgamebutton", "newgame", new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				uiSpawner.uiWidgets.get("mainmenu").setVisible(false);
+				uiSpawner.uiWidgets.get("newgame").setVisible(true);
+			}
+		});
 		
-		exitGame.addListener(new ClickListener(){
+		// continue
+		uiSpawner.RegisterCallback("continuebutton", "continue", new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				
+			}
+		});
+		
+		// options
+		uiSpawner.RegisterCallback("optionbutton", "options", new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				uiSpawner.uiWidgets.get("mainmenu").setVisible(false);
+				uiSpawner.uiWidgets.get("options").setVisible(true);
+			}
+		});
+		
+		// exit
+		uiSpawner.RegisterCallback("exitbutton", "exit", new ClickListener(){
 			public void clicked(InputEvent event, float x, float y){
 				Gdx.app.exit();
 			}
 		});
 		
-		
-		final Window optionWindow = new Window("", skin);
-		optionWindow.setPosition(100,80);
-		//optionWindow.setFillParent(true);
-		optionWindow.defaults().spaceBottom(6.0f);
-		optionWindow.row().fill().expandX();
-		//optionWindow.setModal(true);
-		optionWindow.debug();
-		
-		
-		// vibration checkbox option
-		Label vibrationLabel = new Label("Vibration", skin);
-		CheckBox vibrationFeature = new CheckBox("", skin);
-		optionWindow.add(vibrationLabel);
-		optionWindow.add(vibrationFeature);
-		optionWindow.row();
-		
-		// Music Volume
-		Label musicVolLable = new Label("Music Volume: ",skin);
-		Slider musicVolSlider = new Slider(0, 11, 1, false, skin);
-		optionWindow.add(musicVolLable);
-		optionWindow.add(musicVolSlider);
-		optionWindow.row();
-		
-		
-		// SFX Volume
-		Label sfxVolLable = new Label("SFX Volume: ",skin);
-		Slider sfxVolSlider = new Slider(0, 11, 1, false, skin);
-		optionWindow.add(sfxVolLable);
-		optionWindow.add(sfxVolSlider);
-		optionWindow.row();
-		
-		// Scroll Speed
-		Label scrollSpeedLabel = new Label("Scroll Speed: ", skin);
-		SelectBox scrollSpeedBox = new SelectBox(new String[] {"Slow", "Medium", "Fast", "Instant"}, skin);
-		optionWindow.add(scrollSpeedLabel);
-		optionWindow.add(scrollSpeedBox);
-		optionWindow.row();
-		
-		// back button
-		TextButton backButton =  new TextButton("Back", skin);
-		backButton.addListener(new ClickListener(){
+		//male
+		uiSpawner.RegisterCallback("maleButton", "selectMale", new ClickListener(){
 			public void clicked(InputEvent event, float x, float y){
-				optionWindow.setVisible(false);
-				root.setVisible(true);
-			}
-		});
-		optionWindow.add(backButton).center().colspan(2);
-		
-		optionWindow.pack();
-		
-		ui.addActor(optionWindow);
-		optionWindow.setVisible(false);
-		
-		// option window switch
-		gameOptions.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y){
-				root.setVisible(false);
-				optionWindow.setVisible(true);
-			}
-		});
-		
-		// new game menu
-		final Table newGameMenu = new Table();
-		newGameMenu.setFillParent(true);
-		ui.addActor(newGameMenu);
-		newGameMenu.debug();
-		
-		newGameMenu.setVisible(false);
-		
-		newGameState = NewGameStates.GENDER;
-		
-		newGame.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y){
-				root.setVisible(false);
-				newGameMenu.setVisible(true);
-			}
-		});
-		
-		// Form Section
-		Table formSection = new Table();
-		newGameMenu.add(formSection);
-	
-		// Form Section: Gender
-		final Table genderSelection = new Table();
-		genderSelection.defaults().spaceBottom(10);
-		formSection.addActor(genderSelection);
-		genderSelection.setFillParent(true);
-		
-		Label genderSelectionLabel = new Label("Gender", skin, "title-text");
-		genderSelection.add(genderSelectionLabel);
-		genderSelection.row();
-		
-		TextButton maleSelect = new TextButton("Male", skin, "toggle");
-		genderSelection.add(maleSelect);
-		genderSelection.row();
-		
-		TextButton femaleSelect = new TextButton("Female", skin, "toggle");
-		genderSelection.add(femaleSelect);
-		
-		
-		// Form Section: Class
-		final Table classSelection = new Table();
-		classSelection.defaults().spaceBottom(10);
-		formSection.addActor(classSelection);
-		classSelection.setFillParent(true);
-		
-		Label classSelectionLabel = new Label("Class", skin, "title-text");
-		classSelection.add(classSelectionLabel);
-		classSelection.row();
-		
-		TextButton archerSelect = new TextButton("Archer", skin, "toggle");
-		classSelection.add(archerSelect);
-		classSelection.row();
-		
-		TextButton barbarianSelect = new TextButton("Barbarian", skin, "toggle");
-		classSelection.add(barbarianSelect);
-		classSelection.row();
-		
-		TextButton sorcererSelect = new TextButton("Sorcerer", skin, "toggle");
-		classSelection.add(sorcererSelect);
-		classSelection.row();
-		
-		TextButton warriorSelect = new TextButton("Warrior", skin, "toggle");
-		classSelection.add(warriorSelect);
-		
-		classSelection.setVisible(false);
-		
-		// Form Section: Name
-		final Table nameSelection = new Table();
-		nameSelection.defaults().spaceBottom(10);
-		formSection.addActor(nameSelection);
-		nameSelection.setFillParent(true);
-		
-		Label nameSelectionLabel = new Label("Name", skin, "title-text");
-		nameSelection.add(nameSelectionLabel);
-		nameSelection.row();
-		
-		Label nameLabel =  new Label("Name: ", skin);
-		nameSelection.add(nameLabel);
-		
-		final TextField nameTextField = new TextField("", skin);
-		nameTextField.setMessageText("Enter Name Here!");
-		nameSelection.add(nameTextField);
-		
-		
-		nameSelection.setVisible(false);
-		
-		// Form Section: Review
-		final Table reviewCharacter = new Table();
-		reviewCharacter.defaults().spaceBottom(10);
-		formSection.addActor(reviewCharacter);
-		reviewCharacter.setFillParent(true);
-		
-		Label reviewCharacterLabel = new Label("Review", skin, "title-text");
-		reviewCharacter.add(reviewCharacterLabel);
-		reviewCharacter.row();
-		
-		final Label reviewNameLabel = new Label("Name: ", skin);
-		reviewCharacter.add(reviewNameLabel);
-		reviewCharacter.row();
-		
-		final Label reviewClassLabel = new Label("Class: ", skin);
-		reviewCharacter.add(reviewClassLabel);
-		reviewCharacter.row();
-		
-		final Label reviewGenderLabel = new Label("Gender: ", skin);
-		reviewCharacter.add(reviewGenderLabel);
-		reviewCharacter.row();
-		
-		reviewCharacter.setVisible(false);
-		
-		
-		// Character Display Function
-		Table characterDisplay = new Table();
-		characterDisplay.debug();
-		newGameMenu.add(characterDisplay);
-		
-		characterDisplay.defaults().space(20);
-		
-		final Image charImage = new Image();
-		charImage.setDrawable(maleDefault); // default to male image
-		characterDisplay.add(charImage);
-		
-		newGameMenu.row();
-		
-		//heroGender = HeroGender.MALE;
-		
-		
-		//nameTextField.addListener(new )
-		
-		// Navigation Section
-		Table navSection = new Table();
-		navSection.debug();
-		newGameMenu.add(navSection).colspan(2).minWidth(w);
-		
-		Button mainMenuButton = new Button(skin, "to-main");
-		navSection.add(mainMenuButton).left();
-		
-		Table navButtons = new Table();
-		//navButtons.debug();
-		navSection.add(navButtons).padTop(10).padBottom(10);
-		
-		final Button backNavButton = new Button(skin, "back-button");
-		final Button nextNavButton = new Button(skin, "next-button");
-		navButtons.add(backNavButton).padRight(10);
-		navButtons.add(nextNavButton);
-		
-		
-		maleSelect.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y){
-				charImage.setDrawable(maleDefault);
+				((Image)uiSpawner.uiWidgets.get("characterPane")).setDrawable(uiSpawner.getSkin(), "male");
 				heroGender = HeroGender.MALE;
 				if(heroGender != null)
-					nextNavButton.setDisabled(false);
+					((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(false);
 			}
 		});
 		
-		femaleSelect.addListener(new ClickListener(){
+		//female
+		uiSpawner.RegisterCallback("femaleButton", "selectFemale", new ClickListener(){
 			public void clicked(InputEvent event, float x, float y){
-				charImage.setDrawable(femaleDefault);
+				((Image)uiSpawner.uiWidgets.get("characterPane")).setDrawable(uiSpawner.getSkin(), "female");
 				heroGender = HeroGender.FEMALE;
 				if(heroGender != null)
-					nextNavButton.setDisabled(false);
+					((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(false);
 			}
 		});
 		
-		archerSelect.addListener(new ClickListener(){
+		//archer
+		uiSpawner.RegisterCallback("archer", "archer", new ClickListener(){
 			public void clicked(InputEvent event, float x, float y){
 				switch(heroGender){
 				case MALE:
-					charImage.setDrawable(maleArcher);
+					((Image)uiSpawner.uiWidgets.get("characterPane")).setDrawable(uiSpawner.getSkin(), "male-archer");
 					heroClass = HeroClass.ARCHER;
 					if(heroClass != null)
-						nextNavButton.setDisabled(false);
+						((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(false);
 					break;
 				case FEMALE:
-					charImage.setDrawable(femaleArcher);
+					((Image)uiSpawner.uiWidgets.get("characterPane")).setDrawable(uiSpawner.getSkin(), "female-archer");
 					heroClass = HeroClass.ARCHER;
 					if(heroClass != null)
-						nextNavButton.setDisabled(false);
+						((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(false);
 					break;
 				}
 			}
 		});
 		
-		barbarianSelect.addListener(new ClickListener(){
+		// barbarian
+		uiSpawner.RegisterCallback("barbarian", "barbarian", new ClickListener(){
 			public void clicked(InputEvent event, float x, float y){
 				switch(heroGender){
 				case MALE:
-					charImage.setDrawable(maleBarbarian);
+					((Image)uiSpawner.uiWidgets.get("characterPane")).setDrawable(uiSpawner.getSkin(), "male-barbarian");
 					heroClass = HeroClass.BARBARIAN;
 					if(heroClass != null)
-						nextNavButton.setDisabled(false);
+						((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(false);
 					break;
 				case FEMALE:
-					charImage.setDrawable(femaleBarbarian);
+					((Image)uiSpawner.uiWidgets.get("characterPane")).setDrawable(uiSpawner.getSkin(), "female-barbarian");
 					heroClass = HeroClass.BARBARIAN;
 					if(heroClass != null)
-						nextNavButton.setDisabled(false);
+						((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(false);
 					break;
 				}
 			}
 		});
 		
-		sorcererSelect.addListener(new ClickListener(){
+		//sorcerer
+		uiSpawner.RegisterCallback("sorcerer", "sorcerer", new ClickListener(){
 			public void clicked(InputEvent event, float x, float y){
 				switch(heroGender){
 				case MALE:
-					charImage.setDrawable(maleSorcerer);
+					((Image)uiSpawner.uiWidgets.get("characterPane")).setDrawable(uiSpawner.getSkin(), "male-sorcerer");
 					heroClass = HeroClass.SORCERER;
 					if(heroClass != null)
-						nextNavButton.setDisabled(false);
+						((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(false);
 					break;
 				case FEMALE:
-					charImage.setDrawable(femaleSorcerer);
+					((Image)uiSpawner.uiWidgets.get("characterPane")).setDrawable(uiSpawner.getSkin(), "female-sorcerer");
 					heroClass = HeroClass.SORCERER;
 					if(heroClass != null)
-						nextNavButton.setDisabled(false);
+						((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(false);
 					break;
 				}
 			}
 		});
 		
-		warriorSelect.addListener(new ClickListener(){
+		//warrior
+		uiSpawner.RegisterCallback("warrior", "warrior", new ClickListener(){
 			public void clicked(InputEvent event, float x, float y){
 				switch(heroGender){
 				case MALE:
-					charImage.setDrawable(maleWarrior);
+					((Image)uiSpawner.uiWidgets.get("characterPane")).setDrawable(uiSpawner.getSkin(), "male-warrior");
 					heroClass = HeroClass.WARRIOR;
 					if(heroClass != null)
-						nextNavButton.setDisabled(false);
+						((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(false);
 					break;
 				case FEMALE:
-					charImage.setDrawable(femaleWarrior);
+					((Image)uiSpawner.uiWidgets.get("characterPane")).setDrawable(uiSpawner.getSkin(), "female-warrior");
 					heroClass = HeroClass.WARRIOR;
 					if(heroClass != null)
-						nextNavButton.setDisabled(false);
+						((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(false);
 					break;
 				}
 			}
 		});
 		
-		
-		
-		backNavButton.setDisabled(true);
-		
-		mainMenuButton.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y){
-				root.setVisible(true);
-				newGameMenu.setVisible(false);
-			}
-		});
-		
-		backNavButton.addListener(new ClickListener(){
+		//next
+		uiSpawner.RegisterCallback("navNext", "navNext", new ClickListener(){
 			public void clicked(InputEvent event, float x, float y){
 				switch(newGameState){
-					case GENDER:
-						backNavButton.setDisabled(true);
-					break;
-					case CLASS:
-						genderSelection.setVisible(true);
-						classSelection.setVisible(false);
-						newGameState = NewGameStates.GENDER;
-						backNavButton.setDisabled(true);
-					break;
-					case NAME:
-						classSelection.setVisible(true);
-						nameSelection.setVisible(false);
+				case GENDER:
+					if(heroGender != null){
+						uiSpawner.uiWidgets.get("class").setVisible(true);
+						uiSpawner.uiWidgets.get("gender").setVisible(false);
 						newGameState = NewGameStates.CLASS;
+						((Button)uiSpawner.uiWidgets.get("navBack")).setDisabled(false);
+						((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(true);
+					}
 					break;
-					case REVIEW:
-						nameSelection.setVisible(true);
-						reviewCharacter.setVisible(false);
-						newGameState = NewGameStates.NAME;
-						nextNavButton.setDisabled(false);
-					break;
-				}
-			}
-		});
-		
-		nextNavButton.setDisabled(true);
-		
-		nextNavButton.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y){
-				switch(newGameState){
-					case GENDER:
-						if(heroGender != null){
-						genderSelection.setVisible(false);
-						classSelection.setVisible(true);
-						newGameState = NewGameStates.CLASS;
-						backNavButton.setDisabled(false);
-						nextNavButton.setDisabled(true);
-						}
-					break;
-					case CLASS:
-						if(heroClass != null){
-						classSelection.setVisible(false);
-						nameSelection.setVisible(true);
+				case CLASS:
+					if(heroClass != null){
+						uiSpawner.uiWidgets.get("name").setVisible(true);
+						uiSpawner.uiWidgets.get("class").setVisible(false);
 						newGameState = NewGameStates.NAME;
 						//nextNavButton.setDisabled(true);
-						}
+					}
 					break;
-					case NAME:
-						
-						heroName = nameTextField.getText();
-						if(heroName != ""){
-						reviewNameLabel.setText("Name: "+ heroName);
-						nameSelection.setVisible(false);
-						reviewCharacter.setVisible(true);
+				case NAME:
+					heroName = ((TextField)uiSpawner.uiWidgets.get("nameText")).getText();
+					if(heroName != ""){
+						((Label)uiSpawner.uiWidgets.get("reviewName")).setText("Name: "+ heroName);
+						uiSpawner.uiWidgets.get("review").setVisible(true);
+						uiSpawner.uiWidgets.get("name").setVisible(false);
 						newGameState = NewGameStates.REVIEW;
 						switch(heroClass){
 						case ARCHER:
-							reviewClassLabel.setText("Class: Archer");
+							((Label)uiSpawner.uiWidgets.get("reviewClass")).setText("Class: Archer");
 							break;
 						case BARBARIAN:
-							reviewClassLabel.setText("Class: Barbarian");
+							((Label)uiSpawner.uiWidgets.get("reviewClass")).setText("Class: Barbarian");
 							break;
 						case SORCERER:
-							reviewClassLabel.setText("Class: Sorcerer");
+							((Label)uiSpawner.uiWidgets.get("reviewClass")).setText("Class: Sorcerer");
 							break;
 						case WARRIOR:
-							reviewClassLabel.setText("Class: Warrior");
+							((Label)uiSpawner.uiWidgets.get("reviewClass")).setText("Class: Warrior");
 							break;
 						}
 						switch(heroGender){
 						case MALE:
-							reviewGenderLabel.setText("Gender: Male");
+							((Label)uiSpawner.uiWidgets.get("reviewGender")).setText("Gender: Male");
 							break;
 						case FEMALE:
-							reviewGenderLabel.setText("Gender: Female");
+							((Label)uiSpawner.uiWidgets.get("reviewGender")).setText("Gender: Female");
 							break;
 						}
-						}
-						nextNavButton.setDisabled(true);
+					}
+					//((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(true);
 					break;
-					case REVIEW:
-						nextNavButton.setDisabled(true);
+				case REVIEW:
+					//((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(true);
+					
+					uiSpawner.uiWidgets.get("newgame").setVisible(false);
+					mapManager.ShowMap();
+					
 					break;
 				}
 			}
 		});
 		
+		//back
+		uiSpawner.RegisterCallback("navBack", "navBack", new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				switch(newGameState){
+				case GENDER:
+					((Button)uiSpawner.uiWidgets.get("navBack")).setDisabled(true);
+					break;
+				case CLASS:
+					uiSpawner.uiWidgets.get("gender").setVisible(true);
+					uiSpawner.uiWidgets.get("class").setVisible(false);
+					newGameState = NewGameStates.GENDER;
+					((Button)uiSpawner.uiWidgets.get("navBack")).setDisabled(true);
+					break;
+				case NAME:
+					uiSpawner.uiWidgets.get("class").setVisible(true);
+					uiSpawner.uiWidgets.get("name").setVisible(false);
+					newGameState = NewGameStates.CLASS;
+					break;
+				case REVIEW:
+					uiSpawner.uiWidgets.get("name").setVisible(true);
+					uiSpawner.uiWidgets.get("review").setVisible(false);
+					newGameState = NewGameStates.NAME;
+					((Button)uiSpawner.uiWidgets.get("navNext")).setDisabled(false);
+					break;
+				}
+			}
+		});
+	
+		//option back
+		uiSpawner.RegisterCallback("optionBack", "optionBack", new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				uiSpawner.uiWidgets.get("mainmenu").setVisible(true);
+				uiSpawner.uiWidgets.get("options").setVisible(false);
+			}
+		});
+		
+		//to menu
+		uiSpawner.RegisterCallback("newgameBack", "newgameBack", new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				uiSpawner.uiWidgets.get("mainmenu").setVisible(true);
+				uiSpawner.uiWidgets.get("newgame").setVisible(false);
+			}
+		});
+		
+		//mute
+		uiSpawner.RegisterCallback("mutebutton", "mute", new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				
+			}
+		});
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
-		texture.dispose();
+		//texture.dispose();
 	}
 
 	@Override
@@ -558,9 +361,11 @@ public class BreakingWalls implements ApplicationListener {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		//sprite.draw(batch);
-		ui.act(Gdx.graphics.getDeltaTime());
-		ui.draw();
+		//ui.act(Gdx.graphics.getDeltaTime());
+		//ui.draw();
 		//Table.drawDebug(ui);
+		uiSpawner.RenderWidgets(Gdx.graphics.getDeltaTime());
+		mapManager.DrawMap(Gdx.graphics.getDeltaTime());
 		batch.end();
 	}
 

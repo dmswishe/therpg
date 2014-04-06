@@ -1,7 +1,7 @@
 {
     com.badlogic.gdx.graphics.g2d.BitmapFont: {
         normaltext: { file: fonts/arial25.fnt },
-        titletext: { file: fonts/impact50.fnt} ,
+        titletext: { file: fonts/arial32.fnt} ,
     },
     com.badlogic.gdx.graphics.Color: {
         red: { a: 1, b: 0, g: 0, r: 1 },
@@ -16,7 +16,8 @@
         title-text: { font: titletext, fontColor: red }
     },
     com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
-        default: { up: main, down: main-clicked, checked: main-clicked, disabled: main-disabled }
+        default: { up: main, down: main-clicked, checked: main-clicked, disabled: main-disabled },
+        mute: { up: main, down: main-clicked, checked: main-clicked, disabled: main-disabled  }
     },
     com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
         default: { up: main, down: main-clicked, checked: main, disabled: main-disabled, font: normaltext, fontColor: white },
@@ -25,7 +26,8 @@
     com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
         to-main: { up: mainmenu, down: mainmenu-clicked, checked: mainmenu },
         next-button: { up: next-purple, down: next-teal, checked: next-purple, disabled: next-idle },
-        back-button: { up: back-purple, down: back-teal, checked: back-purple, disabled: back-idle }
+        back-button: { up: back-purple, down: back-teal, checked: back-purple, disabled: back-idle },
+        mute: { up: mainmenu, down: mainmenu-clicked, checked: mainmenu }
     },
     com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
         default: { titleFont: normaltext, titleFontColor: green }
@@ -38,8 +40,9 @@
     },
     com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
         default: {
-            font: normaltext, fontColor: black, background: default-select, listBackground: default-select,
-            listSelection: default-select-selection
+            font: normaltext, fontColor: black, background: default-select,
+            scrollStyle: { vScroll: default-slider, hScrollKnob: default-slider-knob, background: default-select, hScroll: default-slider, vScrollKnob: default-slider-knob },
+            listStyle: { font: normaltext, selection: default-select-selection }
         }
     },
     com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {

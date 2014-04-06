@@ -1,0 +1,54 @@
+
+town.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+townBG
+  rotate: false
+  xy: 1, 323
+  size: 1152, 648
+  orig: 1152, 648
+  offset: 0, 0
+  index: -1
+bakery-interior
+  rotate: false
+  xy: 1, 1
+  size: 480, 320
+  orig: 480, 320
+  offset: 0, 0
+  index: -1
+city-hall-interior
+  rotate: false
+  xy: 1155, 651
+  size: 480, 320
+  orig: 480, 320
+  offset: 0, 0
+  index: -1
+bakery-doors
+  rotate: false
+  xy: 483, 8
+  size: 79, 313
+  orig: 79, 313
+  offset: 0, 0
+  index: -1
+bakery
+  rotate: false
+  xy: 1155, 524
+  size: 156, 125
+  orig: 156, 125
+  offset: 0, 0
+  index: -1
+city-hall
+  rotate: false
+  xy: 1637, 863
+  size: 128, 108
+  orig: 128, 108
+  offset: 0, 0
+  index: -1
+city-hall-doors
+  rotate: false
+  xy: 564, 188
+  size: 25, 133
+  orig: 25, 133
+  offset: 0, 0
+  index: -1

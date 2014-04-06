@@ -1,0 +1,280 @@
+{
+	"Screen" : {
+		"type" : "Table",
+		"fullscreen" : "true",
+		"isActor" : "true",
+		"children" : [
+			"mainmenu" : {
+				"type" : "Table",
+				"spacingBottom" : 10,
+				"isActor" : "true",
+				"background" : "main-bg",
+				"children" : [
+					"mutebutton" : {
+						"type" : "Button",
+						"style" : "mute",
+						"spaceBottom" : 50,
+						"align" : "right"
+					},
+					"endrow",
+					"newgamebutton" : {
+						"type" : "TextButton",
+						"text" : "New Game",
+						"style" : "menu-text",
+						"align" : "center",
+						"width" : 50
+					},
+					"endrow",
+					"continuebutton" : {
+						"type" : "TextButton",
+						"text" : "Continue",
+						"style" : "menu-text",
+						"align" : "center",
+						"width" : 50
+					},
+					"endrow",
+					"optionbutton" : {
+						"type" : "TextButton",
+						"text" : "Option",
+						"style" : "menu-text",
+						"align" : "center",
+						"width" : 50
+					},
+					"endrow",
+					"exitbutton" : {
+						"type" : "TextButton",
+						"text" : "Exit",
+						"style" : "menu-text",
+						"align" : "center",
+						"width" : 50
+					}
+				]
+			},
+			"options" : {
+				"type" : table,
+				"spaceBottom" : 10,
+				"isActor" : "true",
+				"background" : "main-bg",
+				"isVisible" : "false",
+				"children" : [
+					"vibrationLabel" : {
+						"type" : "Label",
+						"text" : "Vibration: ",
+						"style" : "menu-text"
+					},
+					"vibrationBox" : {
+						"type" : "CheckBox"
+					},
+					"endrow",
+					"musicLabel" : {
+						"type" : "Label",
+						"text" : "Music Volume: ",
+						"style" : "menu-text"
+					}
+					"musicSlider" : {
+						"type" : "Slider",
+						"min" : 0,
+						"max" : 11,
+						"step" : 1,
+						"vertical" : "false"
+					},
+					"endrow",
+					"sfxLabel" : {
+						"type" : "Label",
+						"text" : "SFX Volume: ",
+						"style" : "menu-text"
+					}
+					"sfxSlider" : {
+						"type" : "Slider",
+						"min" : 0,
+						"max" : 11,
+						"step" : 1,
+						"vertical" : "false"
+					},
+					"endrow",
+					"scrollLabel" : {
+						"type" : "Label",
+						"text" : "Scroll Speed: ",
+						"style" : "menu-text"
+					},
+					"scrollBox" : {
+						"type" : "SelectBox",
+						"items" : ["Slow", "Medium", "Fast", "Instant"]
+					},
+					"endrow",
+					"optionBack" : {
+						"type" : "TextButton",
+						"text" : "Back",
+						"style" : "menu-text"
+					}
+				]
+			},
+			"newgame" : {
+				"type" : "Table",
+				"isActor" : "true",
+				"isVisible" : "false",
+				"children" : [
+					"selectPane" : {
+						"type" : "Table",
+						"children" : [
+							"gender" : {
+								"type" : "Table",
+								"spaceBottom" : 10,
+								"isActor" : "true",
+								"children" : [
+									"genderTitle" : {
+										"type" : "Label",
+										"text" : "Select Gender",
+										"style" : "header-text"
+									},
+									"endrow",
+									"maleButton" : {
+										"type" : "TextButton",
+										"text" : "Male",
+										"style" : "menu-text"
+									},
+									"endrow",
+									"femaleButton" : {
+										"type" : "TextButton",
+										"text" : "Female",
+										"style" : "menu-text"
+									}
+								]
+							},
+							"class" : {
+								"type" : "Table",
+								"spaceBottom" : 10,
+								"isActor" : "true",
+								"isVisible" : "false",
+								"children" : [
+									"classTitle" : {
+										"type" : "Label",
+										"text" : "Select Class",
+										"style" : "header-text"
+									},
+									endrow,
+									"archer" : {
+										"type" : "TextButton",
+										"text" : "Archer",
+										"style" : "menu-text"
+									},
+									"endrow",
+									"barbarian" : {
+										"type" : "TextButton",
+										"text" : "Barbarian",
+										"style" : "menu-text"
+									},
+									"endrow",
+									"sorcerer" : {
+										"type" : "TextButton",
+										"text" : "Sorcerer",
+										"style" : "menu-text"
+									},
+									"endrow",
+									"warrior" : {
+										"type" : "TextButton",
+										"text" : "Warrior",
+										"style" : "menu-text"
+									}
+								]
+							},
+							"name" : {
+								"type" : "Table",
+								"spaceBottom" : 10,
+								"isActor" : "true",
+								"isVisible" : "false",
+								"children" : [
+									"nameTitle" : {
+										"type" : "Label",
+										"text" : "Name Character",
+										"style" : "header-text"
+									},
+									"endrow",
+									"nameLabel" : {
+										"type" : "Label",
+										"text" : "Name: ",
+										"style" : "menu-text"
+									},
+									"nameText" : {
+										"type" : "TextField",
+										"text" : "",
+										"message" : "Enter Name Here!",
+										"style" : "menu-text"
+									}
+								]
+							},
+							"review" : {
+								"type" : "Table",
+								"spaceBottom" : 10,
+								"isActor" : "true",
+								"isVisible" : "false",
+								"children" : [
+									"reviewName" : {
+										"type" : "Label",
+										"text" : "Name: ",
+										"style" : "menu-text"
+									},
+									"endrow",
+									"reviewClass" : {
+										"type" : "Label",
+										"text" : "Class: ",
+										"style" : "menu-text"
+									},
+									"endrow",
+									"reviewGender" : {
+										"type" : "Label",
+										"text" : "Gender: ",
+										"style" : "menu-text"
+									}
+								]
+							}
+						]
+					},
+					"characterPane" : {
+						"type" : "Image",
+						"drawable" : "male-default",
+						"space" : 20
+					},
+					"endrow",
+					"newgameBack" : {
+						"type" : "Button",
+						"style" : "to-main",
+						"align" : "left"
+					},
+					"newgameNav" : {
+						"type" : "Table",
+						"padTop" : 10,
+						"padBottom" : 10,
+						"children" : [
+							"navBack" : {
+								"type" : "Button",
+								"style" : "back-button",
+								"padRight" : 10,
+								"disabled" : "true",
+							},
+							"navNext" : {
+								"type" : "Button",
+								"style" : "next-button",
+								"disabled" : "true"
+							}
+						]
+					}
+					
+				]
+			},
+			"town" : {
+				"type" : "Table",
+				"isActor" : "true",
+				"align" : "right",
+				"isVisible" : "false",
+				"children" : [
+					
+				]
+			},
+			"map" : {
+				"type" : "Table",
+				"isVisible" : "false"
+			}
+		}
+	}
+}
